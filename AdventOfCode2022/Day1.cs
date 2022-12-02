@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace AdventOfCode2022
@@ -7,43 +8,48 @@ namespace AdventOfCode2022
     {
         public static void part1()
         {
-            string[] numbers = File.ReadAllLines("day1.txt");
-            int[] n = new int[numbers.Length];
-            for(int i = 0; i < n.Length; i++)
+            string[] lines = File.ReadAllLines("day1.txt");
+            int max = 0;
+            int calories = 0;
+            for(int i = 0; i < lines.Length; i++)
             {
-                n[i] = int.Parse(numbers[i]);
+                if(int.TryParse(lines[i], out var value))
+                {
+                    calories += value;
+                }
+                else
+                {
+                    if (calories > max)
+                        max = calories;
+                    calories = 0;
+                }
             }
 
-            int increases = 0;
-
-            for(int i = 0; i < n.Length - 1; ++i)
-            {
-                if (n[i] < n[i + 1])
-                    increases++;
-            }
-            
-            Console.WriteLine(increases);
+            Console.WriteLine(max);
             Console.Read();
         }
 
         public static void part2()
         {
-            string[] numbers = File.ReadAllLines("day1.txt");
-            int[] n = new int[numbers.Length];
-            for (int i = 0; i < n.Length; i++)
+            string[] lines = File.ReadAllLines("day1.txt");
+            List<int> calories = new List<int>();
+            int currentCalories = 0;
+            for (int i = 0; i < lines.Length; i++)
             {
-                n[i] = int.Parse(numbers[i]);
+                if (int.TryParse(lines[i], out var value))
+                {
+                    currentCalories += value;
+                }
+                else
+                {
+                    calories.Add(currentCalories);
+                    currentCalories = 0;
+                }
             }
 
-            int increases = 0;
+            calories.Sort();
 
-            for (int i = 0; i < n.Length - 3; ++i)
-            {
-                if (n[i] < n[i + 3])
-                    increases++;
-            }
-
-            Console.WriteLine(increases);
+            Console.WriteLine(calories[calories.Count - 1] + calories[calories.Count - 2] + calories[calories.Count - 3]);
             Console.Read();
         }
     }
