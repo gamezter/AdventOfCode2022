@@ -12,22 +12,16 @@ namespace AdventOfCode2022
             int score = 0;
             for (int i = 0; i < rounds.Length; i++)
             {
-                char opponent = rounds[i][0];
-                char me = rounds[i][2];
-                if ((opponent == 'A' && me == 'Z') || (opponent == 'B' && me == 'X') || (opponent == 'C' && me == 'Y')) // lose
+                int opponent = rounds[i][0] - 'A';
+                int me = rounds[i][2] - 'X';
+                if (opponent == ((me + 1) % 3)) // lose
                     score += 0;
-                else if (opponent == 'A' && me == 'X' || opponent == 'B' && me == 'Y' || opponent == 'C' && me == 'Z') // tie
+                else if (opponent == me) // tie
                     score += 3;
-                else if (opponent == 'A' && me == 'Y' || opponent == 'B' && me == 'Z' || opponent == 'C' && me == 'X') // win
+                else if (me == ((opponent + 1) % 3)) // win
                     score += 6;
 
-                if (me == 'X')
-                    score += 1;
-                else if (me == 'Y')
-                    score += 2;
-                else if (me == 'Z')
-                    score += 3;
-
+                score += me + 1;
             }
 
             Console.WriteLine(score);
@@ -40,38 +34,19 @@ namespace AdventOfCode2022
             int score = 0;
             for (int i = 0; i < rounds.Length; i++)
             {
-                char opponent = rounds[i][0];
-                char outcome = rounds[i][2];
-                if(outcome == 'X')
-                {
-                    score += 0;
-                    if (opponent == 'A')
-                        score += 3;
-                    else if (opponent == 'B')
-                        score += 1;
-                    else if (opponent == 'C')
-                        score += 2;
-                }
-                else if(outcome == 'Y')
-                {
+                int opponent = rounds[i][0] - 'A';
+                int outcome = rounds[i][2] - 'X';
+
+                int sum = opponent + outcome;
+
+                if (sum == 1 || sum == 4)
+                    score += 1;
+                else if (sum == 2)
+                    score += 2;
+                else if (sum == 0 || sum == 3)
                     score += 3;
-                    if (opponent == 'A')
-                        score += 1;
-                    else if (opponent == 'B')
-                        score += 2;
-                    else if (opponent == 'C')
-                        score += 3;
-                }
-                else if(outcome == 'Z')
-                {
-                    score += 6;
-                    if (opponent == 'A')
-                        score += 2;
-                    else if (opponent == 'B')
-                        score += 3;
-                    else if (opponent == 'C')
-                        score += 1;
-                }
+
+                score += outcome * 3;
             }
 
             Console.WriteLine(score);
