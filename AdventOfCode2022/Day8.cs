@@ -93,10 +93,12 @@ namespace AdventOfCode2022
             int height = lines.Length;
 
             int[,] score = new int[width, height];
+            int[] highest = new int[10];
 
             for (int y = 0; y < height; ++y) // left side
             {
-                int[] highest = new int[10];
+                for (int i = 0; i < 10; ++i)
+                    highest[i] = 0;
                 for (int x = 0; x < width; ++x)
                 {
                     int tree = lines[y][x] - '0';
@@ -108,7 +110,6 @@ namespace AdventOfCode2022
 
             for (int y = 0; y < height; ++y) // right side
             {
-                int[] highest = new int[10];
                 for (int i = 0; i < 10; ++i)
                     highest[i] = width - 1;
                 for (int x = width - 1; x >= 0; --x)
@@ -122,7 +123,8 @@ namespace AdventOfCode2022
 
             for (int x = 0; x < width; ++x) // top side
             {
-                int[] highest = new int[10];
+                for (int i = 0; i < 10; ++i)
+                    highest[i] = 0;
                 for (int y = 0; y < height; ++y)
                 {
                     int tree = lines[y][x] - '0';
@@ -134,7 +136,6 @@ namespace AdventOfCode2022
 
             for (int x = 0; x < width; ++x) // bottom side
             {
-                int[] highest = new int[10];
                 for (int i = 0; i < 10; ++i)
                     highest[i] = height - 1;
                 for (int y = height - 1; y >= 0; --y)
